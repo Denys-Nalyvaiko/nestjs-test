@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import User from './interfaces/users.interface';
+import { User } from './interfaces/users.interface';
 
 @Injectable()
-class UsersService {
+export class UsersService {
   private readonly users: User[] = [];
 
   async findAll(): Promise<User[]> {
@@ -19,5 +19,3 @@ class UsersService {
     return user;
   }
 }
-
-export default UsersService;

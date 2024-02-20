@@ -8,11 +8,11 @@ import {
   Res,
 } from '@nestjs/common';
 import { Response } from 'express';
-import UsersService from './users.service';
-import CreateUserDTO from './dto/create-user.dto';
+import { UsersService } from './users.service';
+import { CreateUserDTO } from './dto/create-user.dto';
 
 @Controller('/users')
-class UsersController {
+export class UsersController {
   constructor(private usersService: UsersService) {}
 
   @Get()
@@ -35,5 +35,3 @@ class UsersController {
     res.status(HttpStatus.CREATED).json(user);
   }
 }
-
-export default UsersController;

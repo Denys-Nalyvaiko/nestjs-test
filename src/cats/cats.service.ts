@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import Cat from './interfaces/cats.interface';
+import { Cat } from './interfaces/cats.interface';
 
 @Injectable()
-class CatsService {
+export class CatsService {
   private readonly cats: Cat[] = [];
 
   findAll(): Cat[] {
@@ -13,5 +13,3 @@ class CatsService {
     this.cats.push(cat);
   }
 }
-
-export default CatsService;

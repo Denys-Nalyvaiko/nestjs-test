@@ -1,7 +1,5 @@
-class CreateCatDTO {
+export class CreateCatDTO {
   name: string;
   age: number;
   breed: string;
 }
-
-export default CreateCatDTO;

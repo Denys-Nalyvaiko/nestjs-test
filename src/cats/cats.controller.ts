@@ -1,10 +1,10 @@
 import { Controller, Get, Post, Body } from '@nestjs/common';
-import CreateCatDTO from './dto/create-cat.dto';
-import CatsService from './cats.service';
-import Cat from './interfaces/cats.interface';
+import { CreateCatDTO } from './dto/create-cat.dto';
+import { CatsService } from './cats.service';
+import { Cat } from './interfaces/cats.interface';
 
 @Controller('/cats')
-class CatsController {
+export class CatsController {
   constructor(private catsService: CatsService) {}
 
   @Get()
@@ -17,5 +17,3 @@ class CatsController {
     this.catsService.create(createCatDTO);
   }
 }
-
-export default CatsController;
