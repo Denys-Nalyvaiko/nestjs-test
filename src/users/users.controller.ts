@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Res,
+  HttpException,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { UsersService } from './users.service';
@@ -17,21 +18,33 @@ export class UsersController {
 
   @Get()
   async findAll(@Res() res: Response) {
-    const users = await this.usersService.findAll();
-    res.status(HttpStatus.OK).json(users);
+    try {
+      const users = await this.usersService.findAll();
+      res.status(HttpStatus.OK).json(users);
+    } catch ({ message, status }) {
+      throw new HttpException(message, status);
+    }
   }
 
   @Get(':id')
   async findOne(@Param() params: any, @Res() res: Response) {
-    const user = await this.usersService.findOne(params.id);
-    res.status(HttpStatus.OK).json(user);
+    try {
+      const user = await this.usersService.findOne(params.id);
+      res.status(HttpStatus.OK).json(user);
+    } catch ({ message, status }) {
+      throw new HttpException(message, status);
+    }
   }
 
   @Post()
   async create(@Body() createUserDTO: CreateUserDTO, @Res() res: Response) {
-    const id = (Math.random() * 10).toString();
-    const user = await this.usersService.create({ id, ...createUserDTO });
+    const id = Date.now().toString();
 
-    res.status(HttpStatus.CREATED).json(user);
+    try {
+      const user = await this.usersService.create({ id, ...createUserDTO });
+      res.status(HttpStatus.CREATED).json(user);
+    } catch ({ message, status }) {
+      throw new HttpException(message, status);
+    }
   }
 }
