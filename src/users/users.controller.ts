@@ -8,6 +8,7 @@ import {
   Res,
   HttpException,
   ParseIntPipe,
+  DefaultValuePipe,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { UsersService } from './users.service';
@@ -29,7 +30,10 @@ export class UsersController {
   }
 
   @Get(':id')
-  async findOne(@Param('id', ParseIntPipe) id: number, @Res() res: Response) {
+  async findOne(
+    @Param('id', new DefaultValuePipe(0), ParseIntPipe) id: number,
+    @Res() res: Response,
+  ) {
     try {
       const user = await this.usersService.findOne(id);
       res.status(HttpStatus.OK).json(user);
