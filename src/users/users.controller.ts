@@ -12,6 +12,7 @@ import {
 import { Response } from 'express';
 import { UsersService } from './users.service';
 import { CreateUserDTO } from './dto/create-user.dto';
+import { UserValidationPipe } from './pipe/user-validation.pipe';
 
 @Controller('/users')
 export class UsersController {
@@ -38,7 +39,10 @@ export class UsersController {
   }
 
   @Post()
-  async create(@Body() createUserDTO: CreateUserDTO, @Res() res: Response) {
+  async create(
+    @Body(new UserValidationPipe()) createUserDTO: CreateUserDTO,
+    @Res() res: Response,
+  ) {
     const id = Date.now().toString();
 
     try {
