@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
-import { CreateCatDTO } from './dto/create-cat.dto';
+import { Controller, Get, Post, Body, UsePipes } from '@nestjs/common';
+import { CreateCatDTO, createCatsSchema } from './dto/create-cat.dto';
 import { CatsService } from './cats.service';
 import { Cat } from './interfaces/cats.interface';
+import { ZodValidationPipe } from 'src/common/pipe/zod-validation.pipe';
 
 @Controller('/cats')
 export class CatsController {
@@ -13,6 +14,7 @@ export class CatsController {
   }
 
   @Post()
+  @UsePipes(new ZodValidationPipe(createCatsSchema))
   async create(@Body() createCatDTO: CreateCatDTO) {
     this.catsService.create(createCatDTO);
   }

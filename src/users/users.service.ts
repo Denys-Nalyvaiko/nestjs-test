@@ -9,8 +9,8 @@ export class UsersService {
     return this.users;
   }
 
-  async findOne(userId: string): Promise<User | undefined> {
-    const targetUser = await this.users.find(({ id }) => id === userId);
+  async findOne(userId: number): Promise<User | undefined> {
+    const targetUser = await this.users.find(({ id }) => Number(id) === userId);
 
     if (!targetUser) {
       throw new NotFoundException();
