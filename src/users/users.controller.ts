@@ -16,6 +16,7 @@ import { CreateUserDTO } from './dto/create-user.dto';
 import { UserValidationPipe } from './pipe/user-validation.pipe';
 
 @Controller('/users')
+// @UseInterceptors(LoggingInterceptor)
 export class UsersController {
   constructor(private usersService: UsersService) {}
 

@@ -4,13 +4,21 @@ import {
   MiddlewareConsumer,
   RequestMethod,
 } from '@nestjs/common';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { AuthMiddleware } from './common/middleware/auth.middleware';
 import { CatsModule } from './cats/cats.module';
 import { UsersModule } from './users/users.module';
+import { LoggingInterceptor } from './common/interceptor/logging.interceptor';
 
 @Module({
   imports: [CatsModule, UsersModule],
+  providers: [
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: LoggingInterceptor,
+    },
+  ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

@@ -15,6 +15,7 @@ import { Roles } from 'src/roles/roles.decorator';
 
 @Controller('/cats')
 @UseGuards(RoleGuard)
+// @UseInterceptors(LoggingInterceptor)
 export class CatsController {
   constructor(private catsService: CatsService) {}
 
