@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { User } from './interfaces/users.interface';
 
 @Injectable()
@@ -22,11 +26,20 @@ export class UsersService {
     return this.users;
   }
 
-  async findOne(filter: string | number): Promise<User | undefined> {
+  async findOne(email: string): Promise<User | undefined> {
     const targetUser = await this.users.find(
-      ({ id: userId, email: userEmail }) =>
-        filter === userId || filter === userEmail,
+      ({ email: userEmail }) => email === userEmail,
     );
+
+    if (!targetUser) {
+      throw new UnauthorizedException('Here');
+    }
+
+    return targetUser;
+  }
+
+  async findById(id: number): Promise<User | undefined> {
+    const targetUser = await this.users.find(({ id: userId }) => id === userId);
 
     if (!targetUser) {
       throw new NotFoundException();

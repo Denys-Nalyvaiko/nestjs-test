@@ -36,7 +36,7 @@ export class UsersController {
     @Res() res: Response,
   ) {
     try {
-      const user = await this.usersService.findOne(id);
+      const user = await this.usersService.findById(id);
       res.status(HttpStatus.OK).json(user);
     } catch ({ message, status }) {
       throw new HttpException(message, status);
