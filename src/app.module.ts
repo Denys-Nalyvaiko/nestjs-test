@@ -10,9 +10,10 @@ import { AuthMiddleware } from './common/middleware/auth.middleware';
 import { CatsModule } from './cats/cats.module';
 import { UsersModule } from './users/users.module';
 import { LoggingInterceptor } from './common/interceptor/logging.interceptor';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [CatsModule, UsersModule],
+  imports: [CatsModule, UsersModule, AuthModule],
   providers: [
     {
       provide: APP_INTERCEPTOR,

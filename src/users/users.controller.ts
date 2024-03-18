@@ -31,7 +31,7 @@ export class UsersController {
   }
 
   @Get(':id')
-  async findOne(
+  async finById(
     @Param('id', new DefaultValuePipe(0), ParseIntPipe) id: number,
     @Res() res: Response,
   ) {
@@ -48,10 +48,8 @@ export class UsersController {
     @Body(new UserValidationPipe()) createUserDTO: CreateUserDTO,
     @Res() res: Response,
   ) {
-    const id = Date.now().toString();
-
     try {
-      const user = await this.usersService.create({ id, ...createUserDTO });
+      const user = await this.usersService.create({ ...createUserDTO });
       res.status(HttpStatus.CREATED).json(user);
     } catch ({ message, status }) {
       throw new HttpException(message, status);
