@@ -4,20 +4,21 @@ import {
   Post,
   Body,
   UsePipes,
-  UseGuards,
+  // UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { CreateCatDTO, createCatsSchema } from './dto/create-cat.dto';
 import { CatsService } from './cats.service';
 import { Cat } from './interfaces/cats.interface';
 import { ZodValidationPipe } from 'src/common/pipe/zod-validation.pipe';
-import { RoleGuard } from 'src/roles/roles.guard';
+// import { RoleGuard } from 'src/roles/roles.guard';
 import { Roles } from 'src/roles/roles.decorator';
 import { TransformInterceptor } from 'src/common/interceptor/transform.interceptor';
 import { TimeoutInterceptor } from 'src/common/interceptor/timeout.interceptor';
+import { Role } from 'src/enums/role.enum';
 
 @Controller('/cats')
-@UseGuards(RoleGuard)
+// @UseGuards(RoleGuard)
 @UseInterceptors(TransformInterceptor, TimeoutInterceptor)
 export class CatsController {
   constructor(private catsService: CatsService) {}
@@ -28,7 +29,7 @@ export class CatsController {
   }
 
   @Post()
-  @Roles(['admin'])
+  @Roles(Role.Admin)
   @UsePipes(new ZodValidationPipe(createCatsSchema))
   async create(@Body() createCatDTO: CreateCatDTO) {
     this.catsService.create(createCatDTO);
