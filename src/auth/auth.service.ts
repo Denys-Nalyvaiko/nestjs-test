@@ -1,4 +1,5 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { UsersService } from 'src/users/users.service';
@@ -9,14 +10,16 @@ import { IUserSignIn } from './interfaces/userSignIn.interface';
 @Injectable()
 export class AuthService {
   constructor(
-    private usersService: UsersService,
+    private configService: ConfigService,
     private jwtService: JwtService,
+    private usersService: UsersService,
   ) {}
 
   async signUp(signUpDTO: SignUpDTO) {
-    const saltRounds = 10;
-
-    signUpDTO.password = await bcrypt.hash(signUpDTO.password, saltRounds);
+    signUpDTO.password = await bcrypt.hash(
+      signUpDTO.password,
+      this.configService.get<string>('saltRounds'),
+    );
 
     const user = await this.usersService.create(signUpDTO);
     user.password = undefined;
