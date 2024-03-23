@@ -1,6 +1,6 @@
 import {
   Injectable,
-  NotFoundException,
+  // NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { User } from './interfaces/users.interface';
@@ -9,13 +9,13 @@ import { User } from './interfaces/users.interface';
 export class UsersService {
   private readonly users: User[] = [
     {
-      id: 1,
+      _id: {},
       name: 'john',
       email: 'john@gmail.com',
       password: 'changeme',
     },
     {
-      id: 2,
+      _id: {},
       name: 'maria',
       email: 'maria@gmail.com',
       password: 'guess',
@@ -38,22 +38,22 @@ export class UsersService {
     return targetUser;
   }
 
-  async findById(id: number): Promise<User | undefined> {
-    const targetUser = await this.users.find(({ id: userId }) => id === userId);
+  // async findById(id: number): Promise<User | undefined> {
+  //   const targetUser = await this.users.find(({ id: userId }) => id === userId);
 
-    if (!targetUser) {
-      throw new NotFoundException();
-    }
+  //   if (!targetUser) {
+  //     throw new NotFoundException();
+  //   }
 
-    return targetUser;
-  }
+  //   return targetUser;
+  // }
 
-  async create(user: Omit<User, 'id'>): Promise<User> {
-    const generatedId = this.users.at(-1) ? this.users.at(-1).id + 1 : 1;
-    const newUser = { id: generatedId, ...user };
+  // async create(user: Omit<User, 'id'>): Promise<User> {
+  //   const generatedId = this.users.at(-1) ? this.users.at(-1).id + 1 : 1;
+  //   const newUser = { id: generatedId, ...user };
 
-    this.users.push(newUser);
+  //   this.users.push(newUser);
 
-    return newUser;
-  }
+  //   return newUser;
+  // }
 }

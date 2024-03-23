@@ -36,7 +36,8 @@ export class UsersController {
     @Res() res: Response,
   ) {
     try {
-      const user = await this.usersService.findById(id);
+      // const user = await this.usersService.findById(id);
+      const user = {};
       res.status(HttpStatus.OK).json(user);
     } catch ({ message, status }) {
       throw new HttpException(message, status);
@@ -49,7 +50,8 @@ export class UsersController {
     @Res() res: Response,
   ) {
     try {
-      const user = await this.usersService.create({ ...createUserDTO });
+      // const user = await this.usersService.create({ ...createUserDTO });
+      const user = {};
       res.status(HttpStatus.CREATED).json(user);
     } catch ({ message, status }) {
       throw new HttpException(message, status);
